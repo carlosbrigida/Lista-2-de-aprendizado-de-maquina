@@ -1,0 +1,184 @@
+\section*{Exercícios do Bishop}
+
+\begin{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item \textbf{Exercício 2.1} \par
+Verifique que a distribuição de Bernoulli $Bern(x|\mu) = \mu^x(1-\mu)^{1-x}$ satisfaz as  seguintes propriedades:
+\begin{equation*}
+    \sum_{x=0}^1 p(x|\mu) = 1
+\end{equation*}
+\begin{equation*}
+    \mathbb{E}[x] = \mu
+\end{equation*}
+\begin{equation*}
+    var[x]=\mu(1-\mu).
+\end{equation*}
+Mostre que a entropia $H[x]$ de uma variável binária $x$ com distribuição Bernoulli é dada por
+\begin{equation*}
+    H[x] = -\mu\ln\mu - (1-\mu)\ln(1-\mu).
+\end{equation*}
+\par
+\textbf{Solução:}
+\par
+$\sum_{x=0}^{1} p(x|\mu) =  \mu^1(1-\mu)^{(1-1)} + \mu^0(1-\mu)^{(1-0)} = \mu + (1-\mu) = \underline{1 \quad} \vline $
+
+
+$\mathbb{E}[x] = \sum_{x=0}^{1} p(x|\mu) x =  \sum_{x=0}^{1} \mu^x(1-\mu)^{1-x} x  = \mu^1(1-\mu)^{(1-1)} 1 + \mu^0(1-\mu)^{(1-0)} 0 = \underline{ \mu \quad} \vline $
+
+$ var[x] = \mathbb{E}[x^2] - \mathbb{E}[x]^2 =  \sum_{x=0}^{1} \mu^x(1-\mu)^{1-x} x^2 - \mu^2 = \mu - \mu^2 = \underline{ \mu(1-\mu) \quad} \vline $
+
+$H[x] = -\sum_x p(x) \ln p(x) = -\sum_x \mu^x(1-\mu)^{1-x} \ln  \mu^x(1-\mu)^{1-x}$
+
+$H[x] =  - \mu^1(1-\mu)^{1-1} \ln  \mu^1(1-\mu)^{1-1} -  \mu^0(1-\mu)^{1-0} \ln  \mu^0(1-\mu)^{1-0}$
+
+$H[x] = \underline{ - \mu \ln  \mu -   (1-\mu) \ln  (1-\mu) \quad} \vline$
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item \textbf{Exercício 2.2} \par
+A forma da distribuição de Bernoulli dada por $Bern(x|\mu) = \mu^x(1-\mu)^{1-x}$  não é simétrica entre os dois valores de $x$. Em algumas situações, será mais conveniente usar uma formulação equivalente para a qual $(x \in \{-1, 1\})$, caso em que a distribuição pode ser escrita
+\begin{equation*}
+    p(x|\mu) = \left(\dfrac{1-\mu}{2}\right)^{(1-x)/2}\left(\dfrac{1+\mu}{2}\right)^{(1+x)/2}
+\end{equation*}
+onde $\mu \in [-1,1]$. Mostre que a distribuiição de $p(x|\mu)$ é normalizada e avalie sua média, variância e entropia.
+\par
+\textbf{Solução:}
+
+% prova da normalização
+
+$\sum_x p(x|\mu) = \left(\dfrac{1-\mu}{2}\right)^{(1-(-1))/2}\left(\dfrac{1+\mu}{2}\right)^{(1+(-1))/2} + \left(\dfrac{1-\mu}{2}\right)^{(1-(1))/2}\left(\dfrac{1+\mu}{2}\right)^{(1+(1))/2} $
+
+$\sum_x p(x|\mu) = \left(\dfrac{1-\mu}{2}\right) + \left(\dfrac{1+\mu}{2}\right)  = \underline{ 1 \quad} \rule[-0.4ex]{0.4pt}{2.5ex} $
+
+% calc E[x]
+
+$\mathbb{E}[x] = \sum_{x=0}^{1} p(x|\mu) x =  \sum_{x=-1}^{1} \left(\dfrac{1-\mu}{2}\right)^{(1-x)/2}\left(\dfrac{1+\mu}{2}\right)^{(1+x)/2}  x$
+
+$\mathbb{E}[x] = \left(\dfrac{1-\mu}{2}\right)^{(1-(-1))/2}\left(\dfrac{1+\mu}{2}\right)^{(1+(-1))/2}(-1) + \left(\dfrac{1-\mu}{2}\right)^{(1-(1))/2}\left(\dfrac{1+\mu}{2}\right)^{(1+(1))/2} (1) $
+
+$\mathbb{E}[x] = \left(\dfrac{1-\mu}{2}\right)(-1) + \left(\dfrac{1+\mu}{2}\right)(1) $
+
+$\mathbb{E}[x] = - \dfrac{1-\mu}{2} + \dfrac{1+\mu}{2} = \underline{ \mu \quad} \rule[-0.8ex]{0.4pt}{2.5ex} $
+
+% calc E[x^2]
+
+$\mathbb{E}[x^2] = \sum_{x=0}^{1} p(x|\mu) x^2 =  \sum_{x=-1}^{1} \left(\dfrac{1-\mu}{2}\right)^{(1-x)/2}\left(\dfrac{1+\mu}{2}\right)^{(1+x)/2}  x^2$
+
+$\mathbb{E}[x^2] = \left(\dfrac{1-\mu}{2}\right)^{(1-(-1))/2}\left(\dfrac{1+\mu}{2}\right)^{(1+(-1))/2}(-1)^2 + \left(\dfrac{1-\mu}{2}\right)^{(1-(1))/2}\left(\dfrac{1+\mu}{2}\right)^{(1+(1))/2} (1)^2 $
+
+$\mathbb{E}[x^2] = \left(\dfrac{1-\mu}{2}\right)(1) + \left(\dfrac{1+\mu}{2}\right)(1) $
+
+$\mathbb{E}[x^2] = \dfrac{1-\mu}{2} + \dfrac{1+\mu}{2} =  1$
+
+% calc var[x]
+
+$ var[x] = \mathbb{E}[x^2] - \mathbb{E}[x]^2 = \underline{ 1 - \mu^2 \quad} \vline $
+
+% calc H[x]
+
+$H[x] = -\sum_x p(x) \ln p(x) =  \underline{  - \left(\dfrac{1-\mu}{2}\right) \ln \left(\dfrac{1-\mu}{2}\right) - \left(\dfrac{1+\mu}{2}\right) \ln \left(\dfrac{1+\mu}{2}\right) \quad} \vline$
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item \textbf{Exercício 2.8}\par
+Considere duas variáveis $x$ e $y$ com distribuição conjunta $p(x,y)$. Prove o seguinte resultado (resultado bem útil conhecido como Regra da Torre)
+\begin{equation*}
+    \mathbb{E}[x] = \mathbb{E}_y[\mathbb{E}_x[x|y]].
+\end{equation*}
+Aqui, $\mathbb{E}_x[x|y]$ denota o valor esperado de $x$ sob a distribuição condicional $p(x|y)$.
+\par
+\textbf{Solução:}
+
+$ \mathbb{E}[x] = \int_y \int_x x p(x,y) dy dx $
+
+Mas $ p(x,y) = p(x|y) p(y)$ (regra do produto). Então,
+
+$ \mathbb{E}[x] = \int_y \int_x x p(x|y) p(y) dy dx = \int_y p(y) \left[ \int_x x p(x|y) dx \right]  dy $
+
+$ \mathbb{E}[x] =\int_y p(y) \mathbb{E}_x[x|y] dy $
+
+$ \mathbb{E}[x] = \underline{ \mathbb{E}_y [ \mathbb{E}_x[x|y] ] \quad} \vline $
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item \textbf{Exercício 2.12} \par
+A distribuição uniforme de uma variável contínua $x$ é definida por
+\begin{equation*}
+    U(x|a,b) = \dfrac{1}{b-a}, \quad a\leq x \leq b.
+\end{equation*}
+Verifique se esta distribuição está normalizada e encontre expressões para sua média e variância.
+\par
+\textbf{Solução:}
+
+% normalização
+
+$ \displaystyle  \int_a^b U(x|a,b) dx = \int_a^b \dfrac{1}{b-a} dx = \dfrac{1}{b-a} [x]_a^b = \dfrac{1}{b-a} (b-a) = \underline{ 1 \quad} \rule[-0.4ex]{0.4pt}{2.5ex} $
+
+$ \mathbb{E}[x] = \displaystyle \int_a^b \dfrac{1}{b-a} x dx = \dfrac{1}{b-a} \left[\dfrac{x}{2}\right]_a^b = \dfrac{1}{b-a} \left(\frac{b^2-a^2}{2}\right) = \dfrac{(b-a)(b+a)}{2(b-a)} = \underline{ \dfrac{a+b}{2} \quad} \vline $
+
+$ \mathbb{E}[x^2] = \displaystyle \int_a^b \dfrac{1}{b-a} x^2 dx = \dfrac{1}{b-a} \left[\dfrac{x^3}{3}\right]_a^b = \dfrac{1}{b-a} \left(\frac{b^3-a^3}{2}\right) = \dfrac{(b-a)(a^2+ab+b^2)}{3(b-a)} = \dfrac{(a^2+ab+b^2)}{3} $
+
+$var[x] = \mathbb{E}[x^2] - \mathbb{E}[x]^2 = \dfrac{(a^2+ab+b^2)}{3} - \dfrac{(a+b)^2}{4} = \dfrac{4(a^2+ab+b^2) - 3 (a^2+2ab+b^2)}{12} $
+
+$var[x] = \dfrac{a^2-2ab+b^2}{12} = \underline{ \dfrac{(b-a)^2}{12} \quad} \vline $
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item \textbf{Exercício 2.13} \par
+Avalie a divergência de Kullback-Leibler 
+\begin{equation*}
+    KL(p || q) = - \int p(x) \ln \left\{ \frac{q(x)}{p(x)} \right\} dx
+\end{equation*}
+ entre duas distribuições Gaussianas $p(x) = \mathcal{N}(x|\mu, \Sigma)$ e $q(x) = \mathcal{N}(x|m, L)$.
+
+\par
+\textbf{Solução:}
+
+$ \underline{ \quad} \vline $
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item \textbf{Exercício 2.15} \par
+Mostre que a entropia da Gaussiana multivariada $ \mathcal{N}(x|\mu, \Sigma) $ é dada por 
+\begin{equation*}
+    H[x] = \frac{1}{2} \ln |\Sigma| + \frac{D}{2} (1 + \ln(2\pi))
+\end{equation*}
+onde $ D $ é a dimensionalidade de $ x $.
+
+\par
+\textbf{Solução:}
+
+$ \underline{ \quad} \vline $
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item \textbf{Exercício 2.20} \par
+Uma matriz definida positiva $\Sigma$ pode ser definida como aquela para a qual o forma quadrática
+\begin{equation*}
+    a^T \Sigma a
+\end{equation*} é positiva para qualquer valor real do vetor $a$. Mostre que uma condição necessária e suficiente para $\Sigma$ ser definida positiva é que todos os autovalores $\lambda_i$ de $\Sigma$, definidos por $\Sigma u_i = \lambda_i u_i$, sejam positivos.
+
+\par
+\textbf{Solução:}
+
+$ \underline{ \quad} \vline $
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\end{enumerate}
