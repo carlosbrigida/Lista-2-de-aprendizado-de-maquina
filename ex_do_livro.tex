@@ -141,12 +141,81 @@ Avalie a divergência de Kullback-Leibler
 \begin{equation*}
     KL(p || q) = - \int p(x) \ln \left\{ \frac{q(x)}{p(x)} \right\} dx
 \end{equation*}
- entre duas distribuições Gaussianas $p(x) = \mathcal{N}(x|\mu, \Sigma)$ e $q(x) = \mathcal{N}(x|m, L)$.
+ entre duas distribuições Gaussianas $p(x) = \mathcal{N}(x|\mu, \Sigma)$ e $q(x) = \mathcal{N}(x|m, L)$ para o caso geral e para os seguintes casos:
 
-\par
-\textbf{Solução:}
+ \begin{enumerate}
+    \item ambas as pdfs têm mesma média e matriz de covariância (isto é, p(x) = q(x); caso em que já sabemos quanto a divergência KL deve resultar);
+    
+    \item ambas as pds têm a mesma média, isto é, $m = \mu.$.
 
-$ \underline{ \quad} \vline $
+ \end{enumerate}
+ \par
+    \textbf{Solução geral:}
+
+    $\displaystyle p(x) = \mathcal{N}(x|\mu, \Sigma) = \frac{1}{(2\pi)^{N/2} |\Sigma|^{1/2}} \exp \left( -\frac{1}{2} (x - \mu)^T \Sigma^{-1} (x - \mu) \right)$ 
+
+    $\displaystyle q(x) = \mathcal{N}(x|m, L) = \frac{1}{(2\pi)^{N/2} |L|^{1/2}} \exp \left( -\frac{1}{2} (x - m)^T L^{-1} (x - m) \right)$ 
+
+    $KL(p || q) = - \int p(x) \ln \left\{ \frac{q(x)}{p(x)} \right\} dx $
+    
+    $= - \int p(x) \ln \left\{\frac{|\Sigma|^{1/2}}{|L|^{1/2}}\exp\left( -\frac{1}{2} (x - m)^T L^{-1} (x - m) +  \frac{1}{2} (x - \mu)^T \Sigma^{-1} (x - \mu)      \right)  \right\} dx $
+
+
+    $= - \int p(x) \ln \left\{\frac{|\Sigma|^{1/2}}{|L|^{1/2}} \right\} dx - \int p(x) \ln \left\{ \exp \left( -\frac{1}{2} (x - m)^T L^{-1} (x - m) +  \frac{1}{2} (x - \mu)^T \Sigma^{-1} (x - \mu)      \right)  \right\} dx $
+
+
+    $= - \ln \left\{\frac{|\Sigma|^{1/2}}{|L|^{1/2}} \right\} - \int p(x)\left( -\frac{1}{2} (x - m)^T L^{-1} (x - m) +  \frac{1}{2} (x - \mu)^T \Sigma^{-1} (x - \mu) \right) dx $
+
+    $= - \ln \left\{\frac{|\Sigma|^{1/2}}{|L|^{1/2}} \right\} - \int p(x)\left( -\frac{1}{2} (x - m)^T L^{-1} (x - m)\right) dx - \int p(x)\left( \frac{1}{2} (x - \mu)^T \Sigma^{-1} (x - \mu) \right) dx $  
+
+
+
+    $ KL(p || q) = - \ln \left\{\frac{|\Sigma|^{1/2}}{|L|^{1/2}} \right\} - \mathbb{E}\left[ -\frac{1}{2} (x - m)^T L^{-1} (x - m) \right] -  \mathbb{E} \left[\frac{1}{2} (x - \mu)^T \Sigma^{-1} (x - \mu) \right]  $
+
+    $ KL(p || q) = - \ln \left\{\frac{|\Sigma|^{1/2}}{|L|^{1/2}} \right\} + \frac{1}{2} \mathbb{E}\left[  (x - m)^T L^{-1} (x - m) \right] -   \frac{1}{2}\mathbb{E} \left[(x - \mu)^T \Sigma^{-1} (x - \mu) \right]  $
+
+    $ KL(p || q) = - \ln \left\{\frac{|\Sigma|^{1/2}}{|L|^{1/2}} \right\} + \frac{1}{2} tr\left(L^{-1}\mathbb{E}\left[  (x - m)^T (x - m) \right]\right) - \frac{1}{2} tr\left(\Sigma^{-1} \mathbb{E} \left[(x - \mu)^T (x - \mu) \right]\right)  $
+
+    $ KL(p || q) = - \ln \left\{\frac{|\Sigma|^{1/2}}{|L|^{1/2}} \right\} + \frac{1}{2} tr\left(L^{-1}\mathbb{E}\left[  (x - m)^T (x - m) \right]\right) - \frac{1}{2} tr\left(\Sigma^{-1} \mathbb{E} \left[(x - \mu)^T (x - \mu) \right]\right)  $
+
+    Como $\mu$ é a média de $p(x)$, temos
+
+    $ KL(p || q) = - \ln \left\{\frac{|\Sigma|^{1/2}}{|L|^{1/2}} \right\} + \frac{1}{2} tr\left(L^{-1}\mathbb{E}\left[  (x - m)^T (x - m) \right]\right) - \frac{1}{2} tr\left(\Sigma^{-1} \Sigma \right) $
+
+    $ KL(p || q) = - \ln \left\{\frac{|\Sigma|^{1/2}}{|L|^{1/2}} \right\} - \frac{1}{2} tr\left(I \right) + \frac{1}{2} tr\left(L^{-1}\mathbb{E}\left[  (x - m)^T (x - m) \right]\right)  $
+
+    $ KL(p || q) = \underline{- \ln \left\{\frac{|\Sigma|^{1/2}}{|L|^{1/2}} \right\} - \frac{D}{2} + \frac{1}{2} tr\left(L^{-1}\mathbb{E}\left[  (x - m)^T (x - m) \right]\right) \quad } \vline  $
+
+    $ $
+
+
+    \textbf{Solução para $\Sigma = L$ e $\mu = m$:}
+
+
+    $ KL(p || q) = - \ln \left\{\frac{|\Sigma|^{1/2}}{|\Sigma|^{1/2}} \right\} - \frac{D}{2} + \frac{1}{2} tr\left(\Sigma^{-1}\mathbb{E}\left[  (x - \mu)^T (x - \mu) \right]\right)   $
+
+    $ KL(p || q) = - \ln \left\{1\right\} - \frac{D}{2} + \frac{1}{2} tr\left(\Sigma^{-1}\Sigma\right)   $
+
+    $ KL(p || q) = - 0 - \frac{D}{2} + \frac{1}{2} tr\left(I\right)   $
+
+    $ KL(p || q) = - \frac{D}{2} + \frac{D}{2} $
+    
+    $ KL(p || q) = \underline{0 \quad} \vline $
+
+
+    \textbf{Solução para apenas $\mu = m$:}
+
+
+    $ KL(p || q) = - \ln \left\{\frac{|\Sigma|^{1/2}}{|L|^{1/2}} \right\} - \frac{D}{2} + \frac{1}{2} tr\left(L^{-1}\mathbb{E}\left[  (x - \mu)^T (x - \mu) \right]\right)   $
+
+    $ KL(p || q) = - \ln \left\{\frac{|\Sigma|^{1/2}}{|L|^{1/2}} \right\} - \frac{D}{2} + \frac{1}{2} tr\left(L^{-1}L\right)   $
+
+    $ KL(p || q) = - \ln \left\{\frac{|\Sigma|^{1/2}}{|L|^{1/2}} \right\} - \frac{D}{2} + \frac{1}{2} tr\left(I\right)   $
+
+    $ KL(p || q) = - \ln \left\{\frac{|\Sigma|^{1/2}}{|L|^{1/2}} \right\} - \frac{D}{2} + \frac{D}{2} $
+    
+    $ KL(p || q) = \underline{- \ln \left\{\frac{|\Sigma|^{1/2}}{|L|^{1/2}} \right\} \quad} \vline $
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -161,7 +230,32 @@ onde $ D $ é a dimensionalidade de $ x $.
 \par
 \textbf{Solução:}
 
-$ \underline{ \quad} \vline $
+$H[x] = - \int p(x) \ln p(x) dx$ e $p(x) = \mathcal{N}(x|\mu, \Sigma) = \frac{1}{(2\pi)^{N/2} |\Sigma|^{1/2}} \exp \left( -\frac{1}{2} (x - \mu)^T \Sigma^{-1} (x - \mu) \right)$ 
+
+Simplificando primeiro o $\ln$
+
+$\ln p(x) = \ln \left[  \frac{1}{(2\pi)^{N/2} |\Sigma|^{1/2}} \exp \left( -\frac{1}{2} (x - \mu)^T \Sigma^{-1} (x - \mu) \right)  \right]$
+
+$\ln p(x) = -\dfrac{D}{2}\ln[2\pi] -\dfrac{1}{2}\ln|\Sigma| -\dfrac{1}{2}(x - \mu)^T \Sigma^{-1} (x - \mu) $
+
+Substituindo na fórmula da entropia
+
+$H[x] = - \int p(x) \left( -\dfrac{D}{2}\ln[2\pi] -\dfrac{1}{2}\ln|\Sigma| -\dfrac{1}{2}(x - \mu)^T \Sigma^{-1} (x - \mu) \right) dx$
+
+$H[x] = - \int p(x) \left( -\dfrac{D}{2}\ln[2\pi] \right) dx + \int p(x)  \left(-\dfrac{1}{2}\ln|\Sigma| \right) dx + \int p(x)  \left( -\dfrac{1}{2}(x - \mu)^T \Sigma^{-1} (x - \mu) \right) dx$
+
+$H[x] = - \left( -\dfrac{D}{2}\ln[2\pi] \right) - \left(-\dfrac{1}{2}\ln|\Sigma| \right) - \int p(x)  \left( -\dfrac{1}{2}(x - \mu)^T \Sigma^{-1} (x - \mu) \right) dx$
+
+$H[x] = \dfrac{D}{2}\ln[2\pi] + \dfrac{1}{2}\ln|\Sigma| - \int p(x)  \left( -\dfrac{1}{2}(x - \mu)^T \Sigma^{-1} (x - \mu) \right) dx$
+
+$H[x] = \dfrac{D}{2}\ln[2\pi] + \dfrac{1}{2}\ln|\Sigma| + \dfrac{1}{2} \mathbb{E}\left[ (x - \mu)^T \Sigma^{-1} (x - \mu) \right]$
+
+$H[x] = \dfrac{D}{2}\ln[2\pi] + \dfrac{1}{2}\ln|\Sigma| + \dfrac{1}{2} tr\left( \Sigma^{-1} \mathbb{E}\left[ (x - \mu)^T (x - \mu) \right] \right)$
+
+$H[x] = \dfrac{D}{2}\ln[2\pi] + \dfrac{1}{2}\ln|\Sigma| + \dfrac{1}{2} tr\left( \Sigma^{-1} \Sigma \right) = \dfrac{D}{2}\ln[2\pi] + \dfrac{1}{2}\ln|\Sigma| + \dfrac{1}{2} tr\left( I \right)$
+
+$H[x] = \dfrac{D}{2}\ln[2\pi] + \dfrac{1}{2}\ln|\Sigma| + \dfrac{D}{2} = \underline{ \dfrac{1}{2}\ln|\Sigma| + \dfrac{D}{2} \left(1 +  \ln[2\pi] \right) \quad} \vline $
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -175,10 +269,28 @@ Uma matriz definida positiva $\Sigma$ pode ser definida como aquela para a qual 
 \par
 \textbf{Solução:}
 
-$ \underline{ \quad} \vline $
+Como $u_1$,...,$u_D$ constituem uma base para o $R^D$, podemos escrever
+
+$$a = a_1 u_1 + a_2 u_2 + ... + a_D u_ D $$
+
+onde $a_1$,...,$a_D$ são coeficientes obtidos projetando-se $a$ em  $u_1$,...,$u_D$.
+
+Então,
+
+$$a^T \Sigma  a = (a_1 u_1^T + ... + a_D u_ D^T) \Sigma (a_1 u_1 + ... + a_D u_ D)$$
+
+Aplicando a definição $\Sigma u_i = \lambda_i u_i$, temos
+
+$$a^T \Sigma  a = (a_1 u_1^T + ... + a_D u_ D^T) (a_1 \lambda_1 u_1 + ... + a_D \lambda_D u_ D)$$
+
+Como $u_i^T u_j = 1$ apenas para $i=j$, sendo $0$ caso contrário, temos
+
+$$a^T \Sigma  a =  (a_1^2 \lambda_1 + ... + a_D^2 \lambda_D )$$
+
+Se os autovalores $\lambda_j$ são sempre positivos, $a_j^2 \lambda_j \geq 0 $ para todo e qualquer $j$, pois $a_j$ será sempre um número real por ser o coeficiente de uma projeção.
+
+Logo, se todos os autovalores $\lambda_j$ de $\Sigma$ são positivos, $\Sigma$ é positiva definida.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
 \end{enumerate}
