@@ -6,7 +6,7 @@ def inferencia_bayesiana(amostra, ab_list):
 
     mu = np.linspace(0, 1, 100)
     n_linhas = len(ab_list)
-    fig, ax = plt.subplots(n_linhas, 3, figsize=(18, 6))
+    fig, ax = plt.subplots(n_linhas, 3, figsize=(18, 10))
 
     for j in range(n_linhas):
         a0, b0 = ab_list[j]
