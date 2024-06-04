@@ -18,12 +18,12 @@ unknown_data = np.vstack([
 labels_C1 = np.full(10, 'C1')
 labels_C2 = np.full(10, 'C2')
 
-# Criar rótulos para os novos dados (desconhecidos)
-unknown_labels = np.array(['Desconhecido', 'Desconhecido', 'Desconhecido', 'Desconhecido'])
+# Criar rótulos verdadeiros para os dados desconhecidos
+unknown_true_labels = np.array(['C1', 'C1', 'C2', 'C2'])
 
 # Combinar dados e rótulos para todos os pontos
 X = np.vstack([C1_data, C2_data, unknown_data])
-y = np.hstack([labels_C1, labels_C2, unknown_labels])
+y = np.hstack([labels_C1, labels_C2, unknown_true_labels])
 
 # Configurar o classificador K-NN
 k_values = [1, 3, 5, 7]
@@ -41,15 +41,16 @@ for i, k in enumerate(k_values):
     # Plotar a classificação dos novos dados
     for j, p in enumerate(pred):
         color = 'red' if p == 'C1' else 'blue'
-        marker = 'x'  # Marcar corretamente classificados com 's' e incorretamente com 'x'
+        marker = 's' if p == y[-4:][j] else 'x'  # Marcar corretamente classificados com 's' e incorretamente com 'x'
         axs[i // 2, i % 2].scatter(X[-4:][j, 0], X[-4:][j, 1], color=color, marker=marker, s=100)  # Aumentar o tamanho para melhor visualização
         axs[i // 2, i % 2].set_title(f'K={k}')
-        legend_elements = [
-            Line2D([0], [0], marker='o', color='w', label='C1', markerfacecolor='red', markersize=10),
-            Line2D([0], [0], marker='o', color='w', label='C2', markerfacecolor='blue', markersize=10),
-            Line2D([0], [0], marker='x', color='w', label='Desconhecido', markeredgecolor='black', markersize=10),
-        ]
-        axs[i // 2, i % 2].legend(handles=legend_elements)
 
+legend_elements = [
+    Line2D([0], [0], marker='o', color='w', label='C1', markerfacecolor='red', markersize=10),
+    Line2D([0], [0], marker='o', color='w', label='C2', markerfacecolor='blue', markersize=10),
+    Line2D([0], [0], marker='x', color='w', label='Classificação Incorreta', markeredgecolor='black', markersize=10),
+    Line2D([0], [0], marker='s', color='w', label='Classificação Correta', markerfacecolor='white', markeredgecolor='black', markersize=10),
+]
+axs[0,1].legend(handles=legend_elements, bbox_to_anchor=(1.05, 1.0), loc='upper left')
 plt.tight_layout()
 plt.show()
